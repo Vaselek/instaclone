@@ -6,8 +6,11 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-10.times do |n|
-	User.create!(name: Faker::Name.name)
+10.times do |n|	
+	name  = Faker::Name.name
+  password = Faker::Internet.password
+  email = Faker::Internet.email
+  User.create!(name:  name, password: password, email: email)			
 end
 
 fixtures_path = Rails.root.join('app', 'assets', 'images', 'fixtures')
