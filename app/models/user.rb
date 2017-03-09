@@ -7,6 +7,7 @@ class User < ApplicationRecord
 	validates :name, presence: true, length: { maximum: 50 }
 	
 	has_many :photos, dependent: :destroy
+	
 	has_many :active_relationships, class_name: "Relationship",
 																	foreign_key: "follower_id",
 																	dependent: :destroy
@@ -15,6 +16,9 @@ class User < ApplicationRecord
 																	 dependent: :destroy
 	has_many :following, through: :active_relationships,  source: :followed
 	has_many :followers, through: :passive_relationships, source: :follower
+	
+	has_many :comments
+	
 
 
 	def follow(other_user)
@@ -28,8 +32,5 @@ class User < ApplicationRecord
 	def following?(other_user)
 		following.include?(other_user)
 	end
-
-
-
-
+	
 end
