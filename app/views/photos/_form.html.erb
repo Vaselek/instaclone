@@ -1,0 +1,15 @@
+<%= form_for [@user, @user.photos.build] do |f| %>
+	<div>
+		<%= f.hidden_field :user_id, :value => @user.id %>
+	</div><br/>
+	<div>
+		<%= f.file_field :image %>
+	</div><br/>
+	<div>
+		<%= f.text_field :title %>
+	</div><br/>
+	<div>
+		<%= f.submit 'Upload Photo' %>
+	</div>
+<% end %>
+
