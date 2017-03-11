@@ -6,8 +6,7 @@ class User < ApplicationRecord
 
 	validates :name, presence: true, length: { maximum: 50 }
 	
-	has_many :photos, dependent: :destroy
-	
+	# Recursive association many-to-many
 	has_many :active_relationships, class_name: "Relationship",
 																	foreign_key: "follower_id",
 																	dependent: :destroy
@@ -17,9 +16,16 @@ class User < ApplicationRecord
 	has_many :following, through: :active_relationships,  source: :followed
 	has_many :followers, through: :passive_relationships, source: :follower
 	
-	has_many :comments
-	
+	#Association one-to-many
+	has_many :photos, dependent: :destroy
 
+	#Associations many-to-many
+	has_many :comments
+	has_many :commented_photos, through: :comments, source: :photo
+	
+	has_many :likes
+	has_many :liked_photos, through: :likes, source: :photo
+	
 
 	def follow(other_user)
 		following << other_user
@@ -33,4 +39,8 @@ class User < ApplicationRecord
 		following.include?(other_user)
 	end
 	
+	
+
 end
+
+

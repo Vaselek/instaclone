@@ -12,11 +12,12 @@
   email = Faker::Internet.email
   User.create!(name:  name, password: password, email: email)			
 end
+	User.create!(name: 'Asel', password: 'qwerty', email: 'asel@mail.ru')
 
 fixtures_path = Rails.root.join('app', 'assets', 'images', 'fixtures')
 
 
-users = User.order(:created_at).take(6)
+users = User.all
 10.times do 	
 	users.each do |user| 
 		user.photos.create!(title: "some title", image: File.new(fixtures_path.join('cpu.jpg')))
@@ -25,7 +26,7 @@ end
 
 users = User.all
 
-1.upto 10 do |i|
+1.upto 11 do |i|
 	user = User.find(i)
 	follower = users.sample
 	unless (user.id == follower.id) && (user.following?(follower)) 
@@ -34,6 +35,16 @@ users = User.all
 end
 
 
+1.upto 11 do |i|
+	Comment.create!(
+		body: Faker::Name.name,
+		user_id: i,
+		photo_id: i+1)	
+end
 
-
-
+1.upto 11 do |i|
+	Comment.create!(
+		body: Faker::Name.name,
+		user_id: i,
+		photo_id: i+10)
+end

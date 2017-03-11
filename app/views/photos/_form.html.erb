@@ -1,15 +1,13 @@
-<%= form_for [@user, @user.photos.build] do |f| %>
+<%= simple_form_for @photo, :html => {:multipart => true} do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
 	<div>
-		<%= f.hidden_field :user_id, :value => @user.id %>
+		<%= f.input :title, label: 'Description of photo' %>
 	</div><br/>
 	<div>
 		<%= f.file_field :image %>
 	</div><br/>
 	<div>
-		<%= f.text_field :title %>
-	</div><br/>
-	<div>
-		<%= f.submit 'Upload Photo' %>
+		<%= f.button :submit %>
 	</div>
 <% end %>
 

@@ -1,10 +1,12 @@
+<p id="notice"><%= notice %></p>
+
 <% @user ||= current_user %>
 
 <div class="container text-center">    
   <div class="row">
     <div class="col-sm-4 well">
-      <div class="well"
-        <p><a href="#">My Profile</a></p>
+      <div class="well">
+        <p><%= @user.name %></a></p>
         <img src="bird.jpg" class="img-circle" height="65" width="65" alt="Avatar">
       </div>
       <div class="well">
@@ -14,77 +16,82 @@
           <span class="label label-primary"> <%= @user.followers.count %> followers</span>          
         </p>
       </div>
-      <div class="well">
-          <%= render 'photos/form' %>          
-      </div>   
+      <% if @user == current_user %>
+        <div class="well">
+            <%= render 'photos/form' %>          
+        </div>
+      <% end %>
     </div>
     
-    <div class="col-sm-8">    
-      <div class="row">
-        <div class="col-sm-12">
+    <div class="col-sm-8">     
+      
+       <p><% @photos.each do |photo| %></p>
+        <div class="well">
           <div class="panel panel-default text-left">
             <div class="panel-body">
-              <p contenteditable="true">Status: Feeling Blue</p>
-              <button type="button" class="btn btn-default btn-sm">
-                <span class="glyphicon glyphicon-thumbs-up"></span> Like
-              </button>
+              <div class="center">              
+                <%= image_tag photo.image.url(:medium) %>
+                <br/>                    
+                  <!-- <div class="col-sm-8"> -->
+                    <div class="row">
+                      <div class="col-sm-2 left">
+                        <% if @user == current_user %>
+                          <%= link_to "Edit" %> ||
+                          <%= link_to "Delete" %>
+                        <% end %>
+                      </div>
+                      <div class="col-sm-7">
+                        <%= photo.title %>
+                      </div>
+                      <div class="col-sm-1 left">
+                        <span class="label label-success"><%= photo.likes.count %> likes</span> 
+                      </div>
+                      <div class="col-sm-1 left">
+                        <button type="button" class="btn btn-default btn-sm">
+                          <% if photo.is_liked?(current_user) %>
+                            <span class="glyphicon glyphicon-thumbs-down"></span> <%= link_to "Unlike", photo_like_path(photo), method: :delete %>
+                          <% else %>
+                            <span class="glyphicon glyphicon-thumbs-up"></span> <%= link_to "Like", photo_likes_path(photo), method: :post %>
+                          <% end %>
+                        </button>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-sm-7">
+                        <ol id="comments">
+                          <%= render photo.comments %>
+                        </ol>
+                      </div>
+                      <div class="col-sm-3">
+                        <div class="form-group">
+                          <%= form_for [photo, photo.comments.build], :html => {:class => "form-horizontal center"} do |f| %>
+                            <div>
+                              <%= f.hidden_field :user_id, :value => @current_user %>
+                            </div>
+                            <div>
+                              <%= f.hidden_field :photo_id, :value => photo.id %>
+                            </div>
+                            <div class="form-group">
+                              <div>
+                                Add comment: <%= f.text_field :body, class: "form-control" %>
+                              </div>
+                            </div>
+                            <%= f.submit "Submit", class: "btn btn-default btn-primary" %>
+                          <% end %>
+                        </div> 
+                      </div>  
+                    
+                  <!-- </div> -->
+
+
+              </div>           
             </div>
           </div>
         </div>
-      </div>      
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well">
-           <p>John</p>
-           <img src="bird.jpg" class="img-circle" height="55" width="55" alt="Avatar">
-          </div>
-        </div>
-        <div class="col-sm-9">
-          <div class="well">
-            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well">
-           <p>Bo</p>
-           <img src="bandmember.jpg" class="img-circle" height="55" width="55" alt="Avatar">
-          </div>
-        </div>
-        <div class="col-sm-9">
-          <div class="well">
-            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well">
-           <p>Jane</p>
-           <img src="bandmember.jpg" class="img-circle" height="55" width="55" alt="Avatar">
-          </div>
-        </div>
-        
-        <div class="col-sm-9">
-          <div class="well">
-            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-          </div>
-        </div>
-      </div>      
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well">
-           <p>Anja</p>
-           <img src="bird.jpg" class="img-circle" height="55" width="55" alt="Avatar">
-          </div>
-        </div>
-        <div class="col-sm-9">
-          <div class="well">
-            <p>Just Forgot that I had to mention something about someone to someone about how I forgot something, but now I forgot it. Ahh, forget it! Or wait. I remember.... no I don't.</p>
-          </div>
-        </div>
-      </div>     
+      <% end %>      
+   
+      
     </div>
   </div>
 </div>

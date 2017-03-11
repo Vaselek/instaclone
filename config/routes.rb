@@ -1,12 +1,18 @@
 Rails.application.routes.draw do
   
-  root 'users#show'
+  root 'users#index'
   devise_for :users
-  resources :photos
+  
+  resources :users
 
-  resources :users do
-  	resources :photos  	
+  resources :photos do
+  	resources :comments, only: [:create, :index]
+  	resources :likes, only: [:create, :destroy]
   end
+
+  
+  resources :comments, only: :destroy
+
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
  	resources :users do
@@ -15,4 +21,6 @@ Rails.application.routes.draw do
  		end
  	end
 
+ 	resources :relationships, only: [:create, :destroy]
+ 	
 end
