@@ -1,0 +1,16 @@
+<div class="form-group">
+  <%= form_for [photo, photo.comments.build], :html => {:class => "form-horizontal center"} do |f| %>
+    <div>
+      <%= f.hidden_field :user_id, :value => @current_user %>
+    </div>
+    <div>
+      <%= f.hidden_field :photo_id, :value => photo.id %>
+    </div>
+    <div class="form-group">
+      <div>
+        Add comment: <%= f.text_field :body, class: "form-control" %>
+      </div>
+    </div>
+    <%= f.submit "Submit", class: "btn btn-default btn-primary" %>
+  <% end %>
+</div> 

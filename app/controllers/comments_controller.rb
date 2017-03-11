@@ -1,18 +1,24 @@
 class CommentsController < ApplicationController
-  before_action :set_photo
+  
 
   def new
   end
 
   def destroy
-    @comment = @photo.comments.find(params[:id])
-
+    @comment = Comment.find(params[:id])
     @comment.destroy
-    flash[:success] = "Comment deleted!"
+    flas[:success] = "Comment deleted!"
+
     redirect_to :back
+    # @comment = @photo.comments.find(params[:id])
+
+    # @comment.destroy
+    # flash[:success] = "Comment deleted!"
+    # redirect_to :back
   end
 
   def create
+    set_photo
    	@comment = @photo.comments.build(comment_params)
     @comment.user_id = current_user.id
 

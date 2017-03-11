@@ -17,88 +17,27 @@
         </p>
       </div>
       <% if @user == current_user %>
-        <div class="well">
-            <%= render 'photos/form' %>          
-        </div>
+      <div class="well">
+        <%= render 'photos/form' %>          
+      </div>
       <% end %>
     </div>
     
-    <div class="col-sm-8">     
-      
-       <p><% @photos.each do |photo| %></p>
-        <div class="well">
-          <div class="panel panel-default text-left">
-            <div class="panel-body">
-              <div class="center">              
-                <%= image_tag photo.image.url(:medium) %>
-                <br/>                    
-                  <!-- <div class="col-sm-8"> -->
-                    <div class="row">
-                      <div class="col-sm-2 left">
-                        <% if @user == current_user %>
-                          <%= link_to "Edit" %> ||
-                          <%= link_to "Delete" %>
-                        <% end %>
-                      </div>
-                      <div class="col-sm-7">
-                        <%= photo.title %>
-                      </div>
-                      <div class="col-sm-1 left">
-                        <span class="label label-success"><%= photo.likes.count %> likes</span> 
-                      </div>
-                      <div class="col-sm-1 left">
-                        <button type="button" class="btn btn-default btn-sm">
-                          <% if photo.is_liked?(current_user) %>
-                            <span class="glyphicon glyphicon-thumbs-down"></span> <%= link_to "Unlike", photo_like_path(photo), method: :delete %>
-                          <% else %>
-                            <span class="glyphicon glyphicon-thumbs-up"></span> <%= link_to "Like", photo_likes_path(photo), method: :post %>
-                          <% end %>
-                        </button>
-                      </div>
-                    </div>
+    <div class="col-sm-8">
+      <div class="well">      
+        <% @photos.each do |photo| %>     
 
-                    <div class="row">
-                      <div class="col-sm-7">
-                        <ol id="comments">
-                          <%= render photo.comments %>
-                        </ol>
-                      </div>
-                      <div class="col-sm-3">
-                        <div class="form-group">
-                          <%= form_for [photo, photo.comments.build], :html => {:class => "form-horizontal center"} do |f| %>
-                            <div>
-                              <%= f.hidden_field :user_id, :value => @current_user %>
-                            </div>
-                            <div>
-                              <%= f.hidden_field :photo_id, :value => photo.id %>
-                            </div>
-                            <div class="form-group">
-                              <div>
-                                Add comment: <%= f.text_field :body, class: "form-control" %>
-                              </div>
-                            </div>
-                            <%= f.submit "Submit", class: "btn btn-default btn-primary" %>
-                          <% end %>
-                        </div> 
-                      </div>  
-                    
-                  <!-- </div> -->
+          <%= render partial: "photos/photo", locals: {photo: photo} %>
 
-
-              </div>           
-            </div>
-          </div>
-        </div>
-      <% end %>      
-   
-      
+        <% end %>     
+      </div>
     </div>
   </div>
 </div>
 
-<footer class="container-fluid text-center">
-  <p>Footer Text</p>
-</footer>
+  <footer class="container-fluid text-center">
+    <p>Footer Text</p>
+  </footer>
 
 </body>
 </html>

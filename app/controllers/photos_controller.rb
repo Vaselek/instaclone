@@ -28,7 +28,7 @@ class PhotosController < ApplicationController
 
   def update
   	if @photo.update
-      save_image
+      # save_image
   		redirect_to @photo
   	else 
   		render 'new'
@@ -46,16 +46,16 @@ class PhotosController < ApplicationController
   	params.require(:photo).permit(:title, :image)
   end
 
-  def save_image
-    uploaded_file = params[:photo][:image]
+  # def save_image
+  #   uploaded_file = params[:photo][:image]
 
-    unless uploaded_file.nil?
-      new_file_path = Rails.root.join('public', 'uploads', @photo.id.to_s)
+  #   unless uploaded_file.nil?
+  #     new_file_path = Rails.root.join('public', 'uploads', @photo.id.to_s)
 
-      File.open(new_file_path, 'wb') do |file|
-        file.write uploaded_file.read
-      end
-    end
-  end
+  #     File.open(new_file_path, 'wb') do |file|
+  #       file.write uploaded_file.read
+  #     end
+  #   end
+  # end
   
 end

@@ -1,0 +1,40 @@
+<div class="panel panel-default text-left">
+  <div class="panel-body">
+    <div class="center">
+      <%= image_tag photo.image.url(:medium) %>                 
+      <div class="row">
+        <div class="col-sm-2 left">
+          <% if @user == current_user %>
+          <%= link_to "Edit" %> ||
+          <%= link_to "Delete" %>
+          <% end %>
+        </div>
+        <div class="col-sm-7">
+          <%= photo.title %>
+        </div>
+        <div class="col-sm-1 left">
+          <span class="label label-success"><%= photo.likes.count %> likes</span> 
+        </div>
+        <div class="col-sm-1 left">
+          <button type="button" class="btn btn-default btn-sm">
+            <% if photo.is_liked?(current_user) %>
+            <span class="glyphicon glyphicon-thumbs-down"></span> <%= link_to "Unlike", photo_like_path(photo), method: :delete %>
+            <% else %>
+            <span class="glyphicon glyphicon-thumbs-up"></span> <%= link_to "Like", photo_likes_path(photo), method: :post %>
+            <% end %>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-7">
+          <ol id="comments">
+            <%= render photo.comments %>
+          </ol>
+        </div>
+        <div class="col-sm-3">				
+					<%= render partial: "comments/form", locals: {photo: photo} %>
+        </div>
+      </div>           
+    </div>
+  </div>
+</div>
