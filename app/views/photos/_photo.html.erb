@@ -1,12 +1,11 @@
 <div class="panel panel-default text-left">
   <div class="panel-body">
     <div class="center">
-      <%= image_tag photo.image.url(:medium) %>                 
+      <%= image_tag photo.image.url(:large) %>                 
       <div class="row">
         <div class="col-sm-2 left">
           <% if @user == current_user %>
-          <%= link_to "Edit" %> ||
-          <%= link_to "Delete" %>
+            <%= link_to "Delete", photo_path(photo), method: :delete %>
           <% end %>
         </div>
         <div class="col-sm-7">

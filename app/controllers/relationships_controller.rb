@@ -1,6 +1,6 @@
 class RelationshipsController < ApplicationController
 	def create
-		followed = User.find params[:followed_id]
+		followed = User.find(params[:followed_id])
 		current_user.follow followed
 
   	redirect_to :back
@@ -13,7 +13,5 @@ class RelationshipsController < ApplicationController
 		redirect_to :back
 	end
 
-
-	
 
 end

@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
   def destroy
     @comment = Comment.find(params[:id])
     @comment.destroy
-    flas[:success] = "Comment deleted!"
+    flash[:success] = "Comment deleted!"
 
     redirect_to :back
     # @comment = @photo.comments.find(params[:id])

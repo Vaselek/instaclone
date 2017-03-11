@@ -13,7 +13,7 @@
         <% user.photos.take(3).each do |photo| %> 
           <div class="col-sm-4">
             <div class="thumbnail">
-              <%= image_tag photo.image.url %>
+              <%= image_tag photo.image.url(:medium) %>
                 <div class="caption">
                   <p><%= photo.title %></p>
                 </div>          

@@ -6,21 +6,24 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-10.times do |n|	
-	name  = Faker::Name.name
-  password = Faker::Internet.password
-  email = Faker::Internet.email
-  User.create!(name:  name, password: password, email: email)			
-end
-	User.create!(name: 'Asel', password: 'qwerty', email: 'asel@mail.ru')
 
 fixtures_path = Rails.root.join('app', 'assets', 'images', 'fixtures')
 
 
+11.upto 20 do |n|	
+	name  = Faker::Name.name
+  password = Faker::Internet.password
+  email = Faker::Internet.email
+  User.create!(name:  name, password: password, email: email, avatar: File.new(fixtures_path.join(n.to_s)))			
+end
+
+User.create!(name: 'Asel', password: 'qwerty', email: 'asel@mail.ru')
+
+
 users = User.all
-10.times do 	
+1.upto 10 do |i|
 	users.each do |user| 
-		user.photos.create!(title: "some title", image: File.new(fixtures_path.join('cpu.jpg')))
+		user.photos.create!(title: "some title", image: File.new(fixtures_path.join(i.to_s)))
 	end
 end
 
