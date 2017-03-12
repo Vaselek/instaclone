@@ -1,4 +1,5 @@
 class PhotosController < ApplicationController
+  
   def new
   	@photo = Photo.new
   end
@@ -7,8 +8,8 @@ class PhotosController < ApplicationController
     @user = current_user
   	@photo = @user.photos.create(photo_params)
   	if @photo.save
-      # save_image
-  		redirect_to @photo      
+      flash[:success] = "Photo created!"
+  		redirect_to :back      
   	else
   		redirect_to :back
   	end
@@ -28,8 +29,7 @@ class PhotosController < ApplicationController
 
   def update
   	if @photo.update
-      # save_image
-  		redirect_to @photo
+      redirect_to @photo
   	else 
   		render 'new'
   	end
@@ -48,17 +48,5 @@ class PhotosController < ApplicationController
   def photo_params
   	params.require(:photo).permit(:title, :image)
   end
-
-  # def save_image
-  #   uploaded_file = params[:photo][:image]
-
-  #   unless uploaded_file.nil?
-  #     new_file_path = Rails.root.join('public', 'uploads', @photo.id.to_s)
-
-  #     File.open(new_file_path, 'wb') do |file|
-  #       file.write uploaded_file.read
-  #     end
-  #   end
-  # end
   
 end

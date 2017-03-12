@@ -1,37 +1,37 @@
 <div class="panel panel-default text-left">
   <div class="panel-body">
     <div class="center">
-      <%= image_tag photo.image.url(:large) %>                 
+      <%= image_tag photo.image.url(:large), :title => photo.title %>                 
       <div class="row">
         <div class="col-sm-2 left">
           <% if @user == current_user %>
             <%= link_to "Delete", photo_path(photo), method: :delete %>
           <% end %>
-        </div>
-        <div class="col-sm-7">
-          <%= photo.title %>
-        </div>
-        <div class="col-sm-1 left">
-          <span class="label label-success"><%= photo.likes.count %> likes</span> 
+        </div>        
+        <div class="col-sm-8 left">
+          <span class="label label-success" id="likes-<%= photo.id %>"><%= photo.likes.count %> likes</span> 
         </div>
         <div class="col-sm-1 left">
           <button type="button" class="btn btn-default btn-sm">
             <% if photo.is_liked?(current_user) %>
-            <span class="glyphicon glyphicon-thumbs-down"></span> <%= link_to "Unlike", photo_like_path(photo), method: :delete %>
+            <span class="glyphicon glyphicon-thumbs-down"></span> <%= link_to "Unlike", photo_like_path(photo), remote: true, method: :delete %>
             <% else %>
-            <span class="glyphicon glyphicon-thumbs-up"></span> <%= link_to "Like", photo_likes_path(photo), method: :post %>
+            <span class="glyphicon glyphicon-thumbs-up"></span> <%= link_to "Like", photo_likes_path(photo), remote: true, method: :post %>
             <% end %>
           </button>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-7">
-          <ol id="comments">
-            <%= render photo.comments %>
-          </ol>
-        </div>
-        <div class="col-sm-3">				
-					<%= render partial: "comments/form", locals: {photo: photo} %>
+        <%= link_to 'Comments', '#', class: 'comments-link' %>
+        <div class="comments_section">
+          <div class="col-sm-7">
+            <ol id="comments">
+              <%= render photo.comments %>
+            </ol>
+          </div>
+          <div class="col-sm-3">				
+  					<%= render partial: "comments/form", locals: { photo: photo } %>
+          </div>
         </div>
       </div>           
     </div>

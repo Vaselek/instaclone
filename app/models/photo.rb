@@ -17,10 +17,6 @@ class Photo < ApplicationRecord
 	validates_attachment_content_type :image, 
                     content_type: ['image/jpeg', 'image/gif', 'image/png']
 
-  # def like(user)
-  # 	likes << user
-  # end
-
   def is_liked?(other_user)
 		liked_users.include?(other_user)
 	end

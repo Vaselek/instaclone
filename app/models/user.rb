@@ -31,8 +31,6 @@ class User < ApplicationRecord
                     default_url: '/avatars/:style/missing.png'
   validates_attachment_content_type :avatar, 
                     content_type: ['image/jpeg', 'image/gif', 'image/png']
-
-
 	
 
 	def follow(other_user)
@@ -45,9 +43,7 @@ class User < ApplicationRecord
 
 	def following?(other_user)
 		following.include?(other_user)
-	end
-	
-	
+	end	
 
 end
 

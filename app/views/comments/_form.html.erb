@@ -1,5 +1,5 @@
 <div class="form-group">
-  <%= form_for [photo, photo.comments.build], :html => {:class => "form-horizontal center"} do |f| %>
+  <%= form_for [photo, photo.comments.build], remote: true, :html => {:class => "form-horizontal center"} do |f| %>
     <div>
       <%= f.hidden_field :user_id, :value => @current_user %>
     </div>

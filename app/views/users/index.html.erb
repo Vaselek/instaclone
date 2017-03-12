@@ -1,5 +1,8 @@
-<div class="container text-center">  
-  <% @users.each do |user| %>
+<div class="container text-center">
+
+
+  
+  <% @following.each do |user| %>
     <div class="well">
       <div class="row">    
         <div class="col-md-4">
@@ -22,17 +25,48 @@
         <% end %>
         <div class="col-md-11 left">
           <div>             
-            <div id="follow_form">
-            <% if current_user.following?(user) %>                  
-              <%= render partial: 'unfollow', locals: { user: user } %>
-            <% else %>
-              <%= render partial: 'follow', locals: { user: user } %>
-            <% end %>
+            <div id="follow_form">                      
+              <%= render partial: 'unfollow', locals: { user: user } %>            
             </div>             
           </div>          
         </div>
       </div>
     </div>
+  <% end %>
+
+
+  <% @users.each do |user| %>
+  <% unless current_user.following?(user) %> 
+    <div class="well">
+      <div class="row">    
+        <div class="col-md-4">
+          
+        </div>
+        <div class="col-md-4">
+          <h2><%= link_to user.name, user_path(user) %></h2>
+        </div>        
+      </div>
+      <div class="row">
+        <% user.photos.take(3).each do |photo| %> 
+          <div class="col-sm-4">
+            <div class="thumbnail">
+              <%= image_tag photo.image.url(:medium) %>
+                <div class="caption">
+                  <p><%= photo.title %></p>
+                </div>          
+            </div>
+          </div>
+        <% end %>
+        <div class="col-md-11 left">
+          <div>             
+            <div id="follow_form">            
+              <%= render partial: 'follow', locals: { user: user } %>            
+            </div>             
+          </div>          
+        </div>
+      </div>
+    </div>
+  <% end %>
   <% end %>
 </div>
 

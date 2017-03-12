@@ -2,14 +2,11 @@ class LikesController < ApplicationController
 
 	before_action :set_photo
 
-  def new
-  end
-
   def destroy
     @like = @photo.likes.where(user: current_user)
 
     @like.destroy_all
-    flash[:success] = "like deleted!"
+    flash[:success] = "Like deleted!"
     redirect_to :back
   end
 
@@ -17,17 +14,16 @@ class LikesController < ApplicationController
    	@like = @photo.likes.create(photo: @photo, user: current_user)
     
     if @like.save
-      flash[:success] = "You have created a like!"
-      redirect_to :back
+      # respond_to do |format|
+      #   format.html  { redirect_to :back }
+      #   format.js {}
+      # end
+      flash[:success] = "Like created!"
+      redirect_to :back           
     else
       flash[:alert] = "Something is wrong!"
       render 'users#show'
     end
-  end
-
-  
-
-  def edit
   end
 
   private

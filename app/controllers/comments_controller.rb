@@ -1,11 +1,7 @@
 class CommentsController < ApplicationController
   
-
-  def new
-  end
-
   def destroy
-    @comment = Comment.find(params[:id])
+    @comment = current_user.comments.find(params[:id])
     @comment.destroy
     flash[:success] = "Comment deleted!"
 
@@ -23,17 +19,15 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id
 
     if @comment.save
-      flash[:success] = "You have created a comment!"
-      redirect_to :back
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.js {}
+      end      
     else
       flash[:alert] = "Something is wrong!"
       render 'users#show'
     end
-  end
 
-  
-
-  def edit
   end
 
   private
